@@ -11,18 +11,18 @@
 <body>
 	<h1>COUNTRIES PAGE</h1>
 	<h2>Welcome, ${loggedUser}!</h2>
-	<a href="/city"><button type="button" class="btn btn-primary">City</button></a>
-	<a href="/continents"><button type="button" class="btn btn-primary">Continents</button></a>
+	<a href="/city"><button type="button" class="btn btn-danger">City</button></a>
+	<a href="/continents"><button type="button" class="btn btn-dark">Continents</button></a>
 	<h3>Find information about countries by country name, continent name or both.</h3>
 	<form autocomplete="off" action="/countries" method="POST">
 		<label for="countryName">Country Name:</label>
 		<input type="text" name="countryName" />
 		<label for="continentName">Continent Name:</label>
 		<input type="text" name="continentName" /> 
-		<input type="submit" value="Search" />
+		<button type="submit" class="btn btn-primary">Search</button>
 	</form>
 	<c:choose>
-	<c:when test="${empty countryList && empty error}">
+	<c:when test="${empty countriesList && empty error}">
 		 <h4>Search for cities Data.</h4>
 		</c:when>
 		<c:when test="${not empty error}">
@@ -37,7 +37,7 @@
 					<th scope="col">Population:</th>
 					<th scope="col">Surface Area:</th>
 				</tr>
-				<c:forEach items="${countryList}" var="country">
+				<c:forEach items="${countriesList}" var="country">
 				<tr>
 					<td>${country.name}</td>
 					<td>${country.code}</td>

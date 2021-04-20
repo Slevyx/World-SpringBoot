@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.objectmethod.world.dao.ICityDao;
@@ -81,7 +81,7 @@ public class HomeController {
 	@PostMapping("/countries")
 	public String getCountriesByCountryNameContinentName(
 			@RequestParam("countryName") String countryName, @RequestParam("continentName") String continentName, ModelMap map) {
-		List<Country> countryList = new ArrayList<>();
+		List<Country> countriesList = new ArrayList<>();
 		if(countryName == null || continentName == null) {
 			map.addAttribute("error", "Null fields.");
 		}
@@ -89,19 +89,19 @@ public class HomeController {
 			try {
 				countryName = countryName.toUpperCase();
 				continentName = continentName.toUpperCase();
-				countryList = countryDao.getCountriesByCountryNameContinentName(countryName, continentName);
+				countriesList = countryDao.getCountriesByCountryNameContinentName(countryName, continentName);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			if(countryList.isEmpty()) {
+			if(countriesList.isEmpty()) {
 				map.addAttribute("error", "Nothing was found.");
 			}
 		}
-		map.addAttribute("countryList", countryList);
+		map.addAttribute("countriesList", countriesList);
 		return "Countries";
 	}
 	
-	@RequestMapping("/continents")
+	@GetMapping("/continents")
 	public String getContinents(ModelMap map) throws SQLException {
 		List<String> continentsList = new ArrayList<>();
 		continentsList = countryDao.getContinents();
@@ -109,8 +109,18 @@ public class HomeController {
 		return "Continents";
 	}
 	
-	@RequestMapping("/{continent-name}/countries")
-	public String getCountriesByContinent(@PathVariable("continent-name"), ModelMap map) {
-		return "";
+	@GetMapping("/{continentName}/countries")
+	public String getCountriesByContinent(@PathVariable("continentName") String continentName, ModelMap map) throws SQLException {
+		List<Country> countries = new ArrayList<>();
+		countries = countryDao.getCountriesbyContinentName(continentName);
+		map.addAttribute("countries", countries);
+		return "CountriesList";
+	} 
+	
+	@GetMapping("/{countryCode}/cities")
+	public String getCitiesByCountry(@PathVariable("countryCode") String countryCode, ModelMap map) throws SQLException {
+		List<City> cities = cityDao.getCitiesByCountry(countryCode);
+		map.addAttribute("cities", cities);
+ 		return "CitiesList";
 	}
 }

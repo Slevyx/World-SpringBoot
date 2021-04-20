@@ -11,15 +11,13 @@
 <body>
 	<h1>CITY PAGE</h1>
 	<h2>Welcome, ${loggedUser}!</h2>
-	<a href="/countries"><button type="button" class="btn btn-primary">Countries</button></a>
-	<a href="/continents"><button type="button" class="btn btn-primary">Continents</button></a>
+	<a href="/countries"><button type="button" class="btn btn-warning">Countries</button></a>
+	<a href="/continents"><button type="button" class="btn btn-dark">Continents</button></a>
 	<h3>Find any information about your preferred city.</h3>
-	<form autocomplete="off" action="/countries" method="POST">
-		<label for="countryName">Country Name:</label>
-		<input type="text" name="countryName" />
-		<label for="continentName">Continent Name:</label>
-		<input type="text" name="continentName" /> 
-		<input type="submit" value="Search" />
+	<form autocomplete="off" action="/city" method="POST">
+		<label for="cityName">City Name:</label>
+		<input type="text" name="cityName" />
+		<button type="submit" class="btn btn-primary">Search</button>
 	</form>
 	<c:choose>
 	<c:when test="${empty city && empty error}">

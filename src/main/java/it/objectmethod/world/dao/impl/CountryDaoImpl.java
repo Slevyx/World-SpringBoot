@@ -23,7 +23,7 @@ public class CountryDaoImpl implements ICountryDao{
 
 	public List<Country> getCountriesByCountryNameContinentName(String countryName, String continent) throws SQLException {
 		Connection connection = dataSource.getConnection();
-		List<Country> countryList = new ArrayList<>();
+		List<Country> countriesList = new ArrayList<>();
 		Country country = null;
 		String sqlQuery = "SELECT Name, Code, Continent, Population, SurfaceArea FROM country WHERE ('' = ? OR UPPER(Name) = ?) AND ('' = ? OR UPPER(Continent) = ?)";
 		PreparedStatement statement = connection.prepareStatement(sqlQuery);
@@ -39,12 +39,12 @@ public class CountryDaoImpl implements ICountryDao{
 			country.setContinent(result.getString("Continent"));
 			country.setPopulation(result.getInt("Population"));
 			country.setSurfaceArea(result.getFloat("SurfaceArea"));
-			countryList.add(country);
+			countriesList.add(country);
 		}
 		result.close();
 		statement.close();
 		connection.close();
-		return countryList;
+		return countriesList;
 	}
 
 	@Override
@@ -61,5 +61,29 @@ public class CountryDaoImpl implements ICountryDao{
 		statement.close();
 		connection.close();
 		return continentsList;
+	}
+
+	@Override
+	public List<Country> getCountriesbyContinentName(String continentName) throws SQLException {
+		Connection connection = dataSource.getConnection();
+		List<Country> countries = new ArrayList<>();
+		Country country = null;
+		String sqlQuery = "SELECT Name, Code, Continent, Population, SurfaceArea FROM country WHERE Continent = ?";
+		PreparedStatement statement = connection.prepareStatement(sqlQuery);
+		statement.setString(1, continentName);
+		ResultSet result = statement.executeQuery();
+		while (result.next()) {
+			country = new Country();
+			country.setName(result.getString("Name"));
+			country.setCode(result.getString("Code"));
+			country.setContinent(result.getString("Continent"));
+			country.setPopulation(result.getInt("Population"));
+			country.setSurfaceArea(result.getFloat("SurfaceArea"));
+			countries.add(country);
+		}
+		result.close();
+		statement.close();
+		connection.close();
+		return countries;
 	}
 }
