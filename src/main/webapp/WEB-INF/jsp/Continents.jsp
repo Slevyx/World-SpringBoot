@@ -25,7 +25,7 @@
 				</tr>
 				<c:forEach items="${continentsList}" var="continent">
 				<tr>
-					<td><a href="/${continent}/countries">${continent}</a></td>
+					<td><a class="text-primary text-decoration-none" href="/${continent}/countries">${continent}</a></td>
 				</tr>
 				</c:forEach>
 			</table>

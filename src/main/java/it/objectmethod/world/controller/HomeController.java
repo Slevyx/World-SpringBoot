@@ -75,7 +75,7 @@ public class HomeController {
 	
 	@GetMapping("/countries")
 	public String landToCountriesPage() {
-		return "Countries";
+		return "CountriesList";
 	}
 	
 	@PostMapping("/countries")
@@ -98,7 +98,7 @@ public class HomeController {
 			}
 		}
 		map.addAttribute("countriesList", countriesList);
-		return "Countries";
+		return "CountriesList";
 	}
 	
 	@GetMapping("/continents")
@@ -114,13 +114,13 @@ public class HomeController {
 		List<Country> countries = new ArrayList<>();
 		countries = countryDao.getCountriesbyContinentName(continentName);
 		map.addAttribute("countries", countries);
-		return "CountriesList";
+		return "Countries";
 	} 
 	
 	@GetMapping("/{countryCode}/cities")
 	public String getCitiesByCountry(@PathVariable("countryCode") String countryCode, ModelMap map) throws SQLException {
 		List<City> cities = cityDao.getCitiesByCountry(countryCode);
 		map.addAttribute("cities", cities);
- 		return "CitiesList";
+ 		return "Cities";
 	}
 }
