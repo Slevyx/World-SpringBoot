@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,62 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.objectmethod.world.dao.ICityDao;
 import it.objectmethod.world.dao.ICountryDao;
-import it.objectmethod.world.models.City;
 import it.objectmethod.world.models.Country;
 
 @Controller
-public class HomeController {
+public class CountryController {
 
 	@Autowired
-	private ICityDao cityDao;
-	@Autowired
 	private ICountryDao countryDao;
-	
-	@PostMapping("/login")
-	public String login(@RequestParam("username") String username, ModelMap map, HttpSession session) {
-		String forwardTo = "City";
-		if(username == null || username.isBlank()) {
-			forwardTo = "Login";
-			map.addAttribute("error", "Username cannot be empty.");
-		}
-		else {
-			session.setAttribute("loggedUser", username);
-		}
-		return forwardTo;
-	}
-	
-	@GetMapping("/login")
-	public String landToLoginPage() {
-		return "Login";
-	}
-	
-	@GetMapping("/city")
-	public String landToCityPage() {
-		return "City";
-	}
-	
-	@PostMapping("/city")
-	public String getCityByName(@RequestParam("cityName") String cityName, ModelMap map) {
-		City city = null;
-		if(cityName == null || cityName.isBlank()) {
-			map.addAttribute("error", "City field cannot be empty.");
-		}
-		else {
-			try {
-				cityName = cityName.toUpperCase();
-				city = cityDao.getCityByName(cityName);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			if(city == null) {
-				map.addAttribute("error", "Nothing was found.");
-			}
-		}
-		map.addAttribute("city", city);
-		return "City";
-	}
 	
 	@GetMapping("/countries")
 	public String landToCountriesPage() {
@@ -113,12 +63,5 @@ public class HomeController {
 		countries = countryDao.getCountriesbyContinentName(continentName);
 		map.addAttribute("countries", countries);
 		return "Countries";
-	} 
-	
-	@GetMapping("/{countryCode}/cities")
-	public String getCitiesByCountry(@PathVariable("countryCode") String countryCode, ModelMap map) throws SQLException {
-		List<City> cities = cityDao.getCitiesByCountry(countryCode);
-		map.addAttribute("cities", cities);
- 		return "Cities";
 	}
 }
