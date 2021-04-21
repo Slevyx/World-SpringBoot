@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +28,13 @@ public class HomeController {
 	private ICountryDao countryDao;
 	
 	@PostMapping("/login")
-	public String login(@RequestParam("username") String username, ModelMap map, HttpServletRequest request) {
+	public String login(@RequestParam("username") String username, ModelMap map, HttpSession session) {
 		String forwardTo = "City";
 		if(username == null || username.isBlank()) {
 			forwardTo = "Login";
 			map.addAttribute("error", "Username cannot be empty.");
 		}
 		else {
-			HttpSession session = request.getSession();
 			session.setAttribute("loggedUser", username);
 		}
 		return forwardTo;
