@@ -28,19 +28,15 @@ public class CountryController {
 	
 	@PostMapping("/countries")
 	public String getCountriesByCountryNameContinentName(
-			@RequestParam("countryName") String countryName, @RequestParam("continentName") String continentName, ModelMap map) {
+			@RequestParam("countryName") String countryName, @RequestParam("continentName") String continentName, ModelMap map) throws SQLException {
 		List<Country> countriesList = new ArrayList<>();
 		if(countryName == null || continentName == null) {
 			map.addAttribute("error", "Null fields.");
 		}
 		else {
-			try {
-				countryName = countryName.toUpperCase();
-				continentName = continentName.toUpperCase();
-				countriesList = countryDao.getCountriesByCountryNameContinentName(countryName, continentName);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			countryName = countryName.toUpperCase();
+			continentName = continentName.toUpperCase();
+			countriesList = countryDao.getCountriesByCountryNameContinentName(countryName, continentName);
 			if(countriesList.isEmpty()) {
 				map.addAttribute("error", "Nothing was found.");
 			}

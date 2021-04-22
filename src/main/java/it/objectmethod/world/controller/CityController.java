@@ -26,18 +26,14 @@ public class CityController {
 	}
 	
 	@PostMapping("/city")
-	public String getCityByName(@RequestParam("cityName") String cityName, ModelMap map) {
+	public String getCityByName(@RequestParam("cityName") String cityName, ModelMap map) throws SQLException {
 		City city = null;
 		if(cityName == null || cityName.isBlank()) {
 			map.addAttribute("error", "City field cannot be empty.");
 		}
 		else {
-			try {
-				cityName = cityName.toUpperCase();
-				city = cityDao.getCityByName(cityName);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cityName = cityName.toUpperCase();
+			city = cityDao.getCityByName(cityName);
 			if(city == null) {
 				map.addAttribute("error", "Nothing was found.");
 			}
