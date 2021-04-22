@@ -1,6 +1,5 @@
 package it.objectmethod.world.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class CityController {
 	}
 	
 	@PostMapping("/city")
-	public String getCityByName(@RequestParam("cityName") String cityName, ModelMap map) throws SQLException {
+	public String getCityByName(@RequestParam("cityName") String cityName, ModelMap map) {
 		City city = null;
 		if(cityName == null || cityName.isBlank()) {
 			map.addAttribute("error", "City field cannot be empty.");
@@ -43,7 +42,7 @@ public class CityController {
 	}
 	
 	@GetMapping("/{countryCode}/cities")
-	public String getCitiesByCountry(@PathVariable("countryCode") String countryCode, ModelMap map) throws SQLException {
+	public String getCitiesByCountry(@PathVariable("countryCode") String countryCode, ModelMap map) {
 		List<City> cities = cityDao.getCitiesByCountry(countryCode);
 		map.addAttribute("cities", cities);
  		return "Cities";

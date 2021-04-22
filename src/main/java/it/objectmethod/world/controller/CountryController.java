@@ -1,6 +1,5 @@
 package it.objectmethod.world.controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class CountryController {
 	
 	@PostMapping("/countries")
 	public String getCountriesByCountryNameContinentName(
-			@RequestParam("countryName") String countryName, @RequestParam("continentName") String continentName, ModelMap map) throws SQLException {
+			@RequestParam("countryName") String countryName, @RequestParam("continentName") String continentName, ModelMap map) {
 		List<Country> countriesList = new ArrayList<>();
 		if(countryName == null || continentName == null) {
 			map.addAttribute("error", "Null fields.");
@@ -46,7 +45,7 @@ public class CountryController {
 	}
 	
 	@GetMapping("/continents")
-	public String getContinents(ModelMap map) throws SQLException {
+	public String getContinents(ModelMap map) {
 		List<String> continentsList = new ArrayList<>();
 		continentsList = countryDao.getContinents();
 		map.addAttribute("continentsList", continentsList);
@@ -54,7 +53,7 @@ public class CountryController {
 	}
 	
 	@GetMapping("/{continentName}/countries")
-	public String getCountriesByContinent(@PathVariable("continentName") String continentName, ModelMap map) throws SQLException {
+	public String getCountriesByContinent(@PathVariable("continentName") String continentName, ModelMap map) {
 		List<Country> countries = new ArrayList<>();
 		countries = countryDao.getCountriesbyContinentName(continentName);
 		map.addAttribute("countries", countries);
