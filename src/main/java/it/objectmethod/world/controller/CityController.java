@@ -25,7 +25,7 @@ public class CityController {
 	}
 	
 	@PostMapping("/city")
-	public String getCityByName(@RequestParam("cityName") String cityName, ModelMap map) {
+	public String getCityByName(@RequestParam(name = "cityName", required = false) String cityName, ModelMap map) {
 		City city = null;
 		if(cityName == null || cityName.isBlank()) {
 			map.addAttribute("error", "City field cannot be empty.");

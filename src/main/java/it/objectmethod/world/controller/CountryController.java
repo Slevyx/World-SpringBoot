@@ -27,7 +27,7 @@ public class CountryController {
 	
 	@PostMapping("/countries")
 	public String getCountriesByCountryNameContinentName(
-			@RequestParam("countryName") String countryName, @RequestParam("continentName") String continentName, ModelMap map) {
+			@RequestParam("countryName") String countryName, @RequestParam(name = "continentName", required = false) String continentName, ModelMap map) {
 		List<Country> countriesList = new ArrayList<>();
 		if(countryName == null || continentName == null) {
 			map.addAttribute("error", "Null fields.");
@@ -52,11 +52,16 @@ public class CountryController {
 		return "Continents";
 	}
 	
-	@GetMapping("/{continentName}/countries")
-	public String getCountriesByContinent(@PathVariable("continentName") String continentName, ModelMap map) {
+	@GetMapping("/countriesByContinent")
+	public String getCountriesByContinent(@RequestParam(name = "continentName", required = false) String continentName, ModelMap map) {
 		List<Country> countries = new ArrayList<>();
-		countries = countryDao.getCountriesbyContinentName(continentName);
-		map.addAttribute("countries", countries);
+		if(continentName == null) {
+			map.addAttribute("error", "Null continent name.");
+		}
+		else {
+			countries = countryDao.getCountriesbyContinentName(continentName);
+			map.addAttribute("countries", countries);
+		}
 		return "Countries";
 	}
 }

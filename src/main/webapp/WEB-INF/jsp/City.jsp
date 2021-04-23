@@ -10,7 +10,14 @@
 </head>
 <body>
 	<h1>CITY PAGE</h1>
-	<h2>Welcome, ${loggedUser}!</h2>
+	<c:choose>
+		<c:when test="${not empty loggedUser}">
+			<h2>Welcome, ${loggedUser}!</h2>
+		</c:when>
+		<c:otherwise>
+			<h2>Welcome, Guest!</h2>
+		</c:otherwise>
+	</c:choose>
 	<a href="/countries"><button type="button" class="btn btn-warning">Countries</button></a>
 	<a href="/continents"><button type="button" class="btn btn-dark">Continents</button></a>
 	<h3>Find any information about your preferred city.</h3>

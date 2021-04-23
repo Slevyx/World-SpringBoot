@@ -10,7 +10,14 @@
 </head>
 <body>
 	<h1>CONTINENTS PAGE</h1>
-	<h2>Welcome, ${loggedUser}!</h2>
+	<c:choose>
+		<c:when test="${not empty loggedUser}">
+			<h2>Welcome, ${loggedUser}!</h2>
+		</c:when>
+		<c:otherwise>
+			<h2>Welcome, Guest!</h2>
+		</c:otherwise>
+	</c:choose>
 	<a href="/city"><button type="button" class="btn btn-danger">City</button></a>
 	<a href="/countries"><button type="button" class="btn btn-warning">Countries</button></a>
 	<h3>Find information about countries and cities.</h3>
@@ -25,7 +32,7 @@
 				</tr>
 				<c:forEach items="${continentsList}" var="continent">
 				<tr>
-					<td><a class="text-primary text-decoration-none" href="/${continent}/countries">${continent}</a></td>
+					<td><a class="text-primary text-decoration-none" href="/countriesByContinent?continentName=${continent}">${continent}</a></td>
 				</tr>
 				</c:forEach>
 			</table>

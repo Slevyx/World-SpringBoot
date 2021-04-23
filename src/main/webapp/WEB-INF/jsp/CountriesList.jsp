@@ -10,7 +10,14 @@
 </head>
 <body>
 	<h1>COUNTRIES PAGE</h1>
-	<h2>Welcome, ${loggedUser}!</h2>
+	<c:choose>
+		<c:when test="${not empty loggedUser}">
+			<h2>Welcome, ${loggedUser}!</h2>
+		</c:when>
+		<c:otherwise>
+			<h2>Welcome, Guest!</h2>
+		</c:otherwise>
+	</c:choose>
 	<a href="/city"><button type="button" class="btn btn-danger">City</button></a>
 	<a href="/continents"><button type="button" class="btn btn-dark">Continents</button></a>
 	<h3>Find information about countries by country name, continent name or both.</h3>
