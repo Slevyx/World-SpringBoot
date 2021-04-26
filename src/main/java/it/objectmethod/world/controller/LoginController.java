@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
 	@PostMapping("/login")
-	public String login(@RequestParam("username") String username, ModelMap map, HttpSession session) {
+	public String login(@RequestParam(name = "username", required = false) String username, ModelMap map, HttpSession session) {
 		String forwardTo = "City";
 		if(username == null || username.isBlank()) {
 			forwardTo = "Login";
