@@ -26,7 +26,7 @@ public class CountryController {
 	
 	@PostMapping("/countries")
 	public String getCountriesByCountryNameContinentName(
-			@RequestParam("countryName") String countryName, @RequestParam(name = "continentName", required = false) String continentName, ModelMap map) {
+			@RequestParam(name = "countryName", required = false) String countryName, @RequestParam(name = "continentName", required = false) String continentName, ModelMap map) {
 		List<Country> countriesList = new ArrayList<>();
 		if(countryName == null || continentName == null) {
 			map.addAttribute("error", "Null fields.");
